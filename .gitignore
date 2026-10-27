@@ -1,0 +1,12 @@
+# Python environment
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Bulky datasets and raw videos
+datasets/
+outputs/dashboard/temp_*
+outputs/streamlit.log
+
+# Local config
+.env
