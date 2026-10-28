@@ -1,59 +1,47 @@
 # FireWatch AI 🔥
 
-**FireWatch AI** is a computer-vision project for reviewing prerecorded fire-response and industrial-safety footage. It provides a Streamlit dashboard that runs a trained YOLO model on uploaded images or videos, visualizes detections, and lets users download annotated media and detection records.
+FireWatch AI is an educational computer-vision prototype for reviewing prerecorded fire and smoke footage. It uses a custom-trained YOLO26n model and a Streamlit interface to analyze uploaded images and videos, display bounding-box annotations, and export detection records.
 
-> **Status:** The repository currently contains the Streamlit interface and reusable image/video inference code. The trained weights are expected at a local Google Drive path and are not included in this repository. Risk reporting, temporal risk assessment, PPE analysis, and a complete deployment workflow should be considered unfinished unless implemented and tested separately.
+> **Project status:** Prototype. Image/video inference is implemented. Risk Reports is currently a placeholder in the Streamlit app. PPE detection, firefighter proximity analysis, and validated fire-progression assessment are not integrated into the app. This project is not a certified alarm or life-safety system.
 
 ## Features
 
-- **Image analysis:** Upload an image and run object detection with a configurable confidence threshold.
-- **Video analysis:** Upload prerecorded footage and process its frames.
-- **Visual results:** View annotated images/videos with model bounding boxes.
-- **Detection summaries:** Review fire and smoke detection counts and frame totals.
-- **Detection export:** Download detection details as a CSV file.
-- **Streamlit interface:** Navigate Overview, Video Analysis, Risk Reports, and Model Information pages.
-- **Reusable inference functions:** Image and video processing is separated into `src/inference.py`.
+- Upload images: JPG, JPEG, PNG, WEBP.
+- Upload prerecorded videos: MP4, AVI, MOV, MKV.
+- Run the included fire/smoke detector with an adjustable confidence threshold.
+- View annotated output with bounding boxes.
+- Review predicted classes, confidence scores, bounding-box coordinates, and video frame numbers.
+- Download annotated media and detection CSV files.
+- Use the reusable inference functions in `src/inference.py`.
 
-## Current implementation
-
-| Component | Responsibility |
-|---|---|
-| `app/streamlit_app.py` | Streamlit user interface, uploads, model invocation, results, and downloads |
-| `src/inference.py` | YOLO inference for images/videos, bounding-box extraction, annotation, and video output |
-| `requirements.txt` | Python dependencies |
-| `packages.txt` | System packages used by the hosting environment |
-| `.gitignore` | Excludes Python cache files, environment files, and selected generated data |
-
-### Detection output
-
-The inference module records the predicted class, confidence, and bounding-box coordinates (`x1`, `y1`, `x2`, `y2`). Video records also include the frame number. The dashboard saves a CSV named `detections.csv` and an annotated image or video under its configured output directory.
-
-Detection counts are counts of predictions, not necessarily counts of unique real-world fire or smoke events. Model performance depends on the trained weights, data, confidence threshold, and recording conditions.
-
-## Technology stack
-
-- Python
-- [Ultralytics YOLO](https://docs.ultralytics.com/)
-- OpenCV
-- Streamlit
-- Pandas
-- FFmpeg for video re-encoding when available
-
-## Repository structure
+## Current architecture
 
 ```text
 firewatch-ai/
 ├── app/
-│   └── streamlit_app.py
+│   └── streamlit_app.py       # Streamlit interface
 ├── src/
-│   └── inference.py
-├── requirements.txt
-├── packages.txt
-├── .gitignore
-└── README.md
+│   └── inference.py           # Image and video inference
+├── models/
+│   └── best.pt                # Trained fire/smoke model weights
+├── runs/                      # Training and evaluation artifacts
+├── reports/                   # Saved model metrics and comparisons
+├── outputs/                   # Example outputs and evaluation artifacts
+├── configs/                   # Experiment configuration
+├── requirements.txt           # Python dependencies
+├── packages.txt               # Linux system packages for hosting
+└── .gitignore
 ```
 
-## Setup
+## Model
+
+The included `models/best.pt` checkpoint is a custom-trained **YOLO26n** fire/smoke detector. The saved model-loading output identifies the classes as `fire` and `smoke`.
+
+The repository contains a saved metrics report at `reports/fire_smoke_test_metrics.json`. It reports precision 90.71%, recall 82.73%, mAP@50 87.07%, and mAP@50–95 59.71%. These are reported experiment results and have **not been independently reproduced as part of this README update**. See the evaluation artifacts and dataset/split limitations before drawing conclusions from them.
+
+Detection counts are counts of model predictions. For video, the same real-world fire or smoke region may be detected in many frames, so prediction counts are not unique incident counts.
+
+## Run locally
 
 ### 1. Clone the repository
 
@@ -62,93 +50,80 @@ git clone https://github.com/Pallavi415/firewatch-ai.git
 cd firewatch-ai
 ```
 
-### 2. Create and activate a virtual environment (recommended)
+### 2. Create a virtual environment
 
-```bash
-python -m venv .venv
-```
-
-**Windows PowerShell:**
+Windows PowerShell:
 
 ```powershell
+python -m venv .venv
 .venv\Scripts\Activate.ps1
 ```
 
-**macOS/Linux:**
+macOS/Linux:
 
 ```bash
+python -m venv .venv
 source .venv/bin/activate
 ```
 
 ### 3. Install dependencies
 
+Use a Python version supported by the installed PyTorch and Ultralytics versions, then run:
+
 ```bash
+python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-FFmpeg and the operating-system packages listed in `packages.txt` may also be needed, particularly for video encoding and hosted deployments. Installation commands vary by operating system and hosting platform.
+FFmpeg is used to re-encode processed video when available. `packages.txt` lists system packages intended for Linux hosting environments. Local installation steps vary by operating system.
 
-## Model configuration
+### 4. Start the dashboard
 
-The current dashboard expects trained weights at:
-
-```text
-/content/drive/MyDrive/FireWatch-AI/runs/fire_smoke/yolo26n_fire_smoke_v1/weights/best.pt
-```
-
-This is a Google Colab/Google Drive-specific path. On another machine or hosting service, update `PROJECT_DIR` and `MODEL_PATH` in `app/streamlit_app.py` to locations that exist in that environment, and ensure that the trained weights are available there.
-
-The current inference code expects a YOLO-compatible model with class names that include `fire` and `smoke` for the corresponding counts. Actual class names are determined by the supplied weights. The dashboard does not include the model weights or training dataset in this repository.
-
-## Run the dashboard
-
-After installing the dependencies and configuring a valid model path, run:
+From the repository root:
 
 ```bash
 streamlit run app/streamlit_app.py
 ```
 
-Open the local URL shown by Streamlit. Upload a supported image or video, choose the confidence threshold, and select **Analyze with FireWatch AI**. After processing, view the annotated output and download the media or CSV results.
+The app expects model weights at `models/best.pt`, relative to the repository root. Keep that file in place when running the app. Output files are written under `outputs/dashboard/`.
 
-### Supported inputs in the current UI
+## Deploy on Streamlit Community Cloud
 
-- **Images:** JPG, JPEG, PNG, WEBP
-- **Videos:** MP4, AVI, MOV, MKV
+1. Sign in to [Streamlit Community Cloud](https://share.streamlit.io/) using the GitHub account that can access this repository.
+2. Select **Create app** and choose the `Pallavi415/firewatch-ai` repository, the `main` branch, and `app/streamlit_app.py` as the main file.
+3. Deploy the app. Streamlit Community Cloud installs Python dependencies from `requirements.txt` and can use `packages.txt` for supported Linux packages.
+4. Confirm that the deployed environment can install the dependencies and load `models/best.pt`. Check the app logs if startup or model loading fails.
+5. Test both an image and a short video after deployment.
 
-Video processing time depends on the video's length/resolution and the available compute.
+The repository can remain private if your Streamlit Community Cloud account and deployment setup have permission to access it. Do not make the repository public just to attempt deployment. If the app fails because of model compatibility, system packages, memory, or dependency issues, resolve that from the deployment logs before sharing the app link.
 
-## Limitations and safety
+## Current limitations
 
-- This is a prototype for experimentation and decision support, **not a certified fire-alarm, emergency-response, or life-safety system**.
-- Results depend on the quality and scope of the trained model and may include false positives or missed detections.
-- The dashboard's Risk Reports page is currently a placeholder; a validated risk-scoring engine is not implemented in the inspected application code.
-- PPE compliance detection and firefighter proximity assessment are not implemented in the inspected inference module.
-- Although temporal video processing is performed frame by frame, event confirmation, progression tracking, and temporal smoothing are not implemented in the inspected inference module.
-- Validate the model on representative, held-out data before relying on its predictions.
-- Avoid committing private datasets, large video files, trained weights, credentials, or tokens.
+- **Risk Reports:** Placeholder page in the Streamlit application; the experimental notebook-based risk calculations are not integrated into the app.
+- **PPE and proximity:** PPE compliance detection and firefighter-to-hazard proximity estimation are not integrated into the current app.
+- **Temporal progression:** Video is processed frame by frame, but the current inference module does not confirm incidents across time or reliably determine physical fire growth.
+- **Evaluation:** Saved metrics and small video experiments are not a substitute for a reproducible, representative held-out evaluation.
+- **Video counts:** Fire/smoke counts in the app count prediction rows across frames, not unique objects or incidents.
+- **Video encoding:** FFmpeg re-encoding is attempted; if it fails, the fallback output may not be browser-compatible.
+- **Deployment:** The app needs the trained model file and compatible dependencies. Deployment success must be confirmed by running the app in the target environment.
+- **Safety:** The model can produce false positives and miss hazards. Do not use it as a replacement for certified alarms, trained personnel, emergency procedures, or professional safety systems.
 
-## Roadmap
+## Development roadmap
 
-Potential next steps for the project include:
+- Make evaluation reproducible with a documented dataset split, checkpoint, and evaluation command.
+- Add automated tests for inference and video-output handling.
+- Integrate a tested risk-analysis module into the Streamlit interface.
+- Evaluate temporal confirmation, fire progression, PPE detection, and proximity estimation on representative data before describing them as supported features.
+- Add CI checks and document the model/data provenance and applicable licenses.
 
-- Add a tested risk-scoring pipeline and explainable risk reports.
-- Add temporal confirmation and fire progression analysis.
-- Integrate and evaluate PPE detection and firefighter-to-hazard proximity estimation.
-- Add reproducible evaluation reports with clearly defined metrics.
-- Make model and output paths configurable through environment variables or a settings file.
-- Add automated tests and a documented deployment workflow.
+## Data, weights, and responsible use
 
-These items are proposed future work, not claims of existing functionality.
+The `datasets/` directory is excluded by `.gitignore`; datasets are not required to launch the dashboard, but the included checkpoint is required for inference. Before redistributing this project, verify the licenses and redistribution terms for the training data, sample media, pretrained components, dependencies, and trained weights. Do not commit credentials, access tokens, private datasets, or local environment files.
 
 ## Disclaimer
 
-FireWatch AI is an educational and development project. It must not replace trained personnel, established safety procedures, certified alarms, or professional emergency systems.
+FireWatch AI is an educational development prototype for decision support. It is not certified for fire alarms, emergency response, or life-safety decisions.
 
 ## Author
 
-**Pallavi Dahiya**  
-GitHub: [@Pallavi415](https://github.com/Pallavi415)
-
----
-
-If you use or extend this project, document the model source, training data, dataset licenses, and evaluation results alongside the relevant code.
+**Pallavi Dahiya** · [GitHub: @Pallavi415](https://github.com/Pallavi415)
