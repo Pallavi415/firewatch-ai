@@ -1,0 +1,8 @@
+video_name,video_category,ground_truth,fire_detection_rate,smoke_detection_rate
+negsVideo1.858.avi,fire,negative,0.0495,0.0066
+posVideo1.868.avi,fire,fire_positive,1.0,0.0
+posVideo2.871.avi,fire,fire_positive,1.0,0.0294
+testneg01.807.avi,smoke,negative,0.0,0.0
+testneg02.808.avi,smoke,negative,0.0,0.0
+testpos01.817.avi,smoke,smoke_positive,0.0,0.5714
+testpos02.818.avi,smoke,smoke_positive,0.3707,0.0

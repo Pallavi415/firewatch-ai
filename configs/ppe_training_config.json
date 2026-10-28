@@ -1,0 +1,14 @@
+{
+    "experiment_name": "yolo26n_ppe_v1",
+    "model_checkpoint": "yolo26n.pt",
+    "data_yaml": "/content/drive/MyDrive/FireWatch-AI/datasets/candidates/ppe_compliance_v2_bbox_candidate/data.yaml",
+    "epochs": 20,
+    "image_size": 640,
+    "batch_size": 16,
+    "device": 0,
+    "seed": 42,
+    "deterministic": true,
+    "workers": 2,
+    "patience": 5,
+    "output_project": "/content/drive/MyDrive/FireWatch-AI/runs/ppe"
+}

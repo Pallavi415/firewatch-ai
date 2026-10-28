@@ -1,0 +1,15 @@
+video_name,video_category,ground_truth,detected_class,sampled_frames,detected_frames,detection_rate,avg_confidence
+posVideo1.868.avi,fire,fire_positive,fire,20,20,1.0,0.5668
+posVideo1.868.avi,fire,fire_positive,smoke,20,0,0.0,0.0
+posVideo2.871.avi,fire,fire_positive,fire,34,34,1.0,0.7974
+posVideo2.871.avi,fire,fire_positive,smoke,34,1,0.0294,0.2501
+negsVideo1.858.avi,fire,negative,fire,303,15,0.0495,0.4329
+negsVideo1.858.avi,fire,negative,smoke,303,2,0.0066,0.2775
+testpos01.817.avi,smoke,smoke_positive,fire,28,0,0.0,0.0
+testpos01.817.avi,smoke,smoke_positive,smoke,28,16,0.5714,0.713
+testpos02.818.avi,smoke,smoke_positive,fire,116,43,0.3707,0.6743
+testpos02.818.avi,smoke,smoke_positive,smoke,116,0,0.0,0.0
+testneg01.807.avi,smoke,negative,fire,17,0,0.0,0.0
+testneg01.807.avi,smoke,negative,smoke,17,0,0.0,0.0
+testneg02.808.avi,smoke,negative,fire,76,0,0.0,0.0
+testneg02.808.avi,smoke,negative,smoke,76,0,0.0,0.0

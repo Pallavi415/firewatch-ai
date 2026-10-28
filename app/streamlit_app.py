@@ -1,4 +1,3 @@
-
 import sys
 import tempfile
 from pathlib import Path
@@ -6,8 +5,9 @@ import pandas as pd
 import streamlit as st
 from ultralytics import YOLO
 
-PROJECT_DIR = Path("/content/drive/MyDrive/FireWatch-AI")
-MODEL_PATH = PROJECT_DIR / "runs/fire_smoke/yolo26n_fire_smoke_v1/weights/best.pt"
+# Configure paths to use relative directory structures for deployment portability
+PROJECT_DIR = Path(".")
+MODEL_PATH = PROJECT_DIR / "models/best.pt"
 OUTPUT_DIR = PROJECT_DIR / "outputs/dashboard"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 

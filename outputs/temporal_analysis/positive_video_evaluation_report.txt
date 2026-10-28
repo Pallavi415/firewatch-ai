@@ -1,0 +1,19 @@
+FireWatch AI - Positive Video Evaluation Report
+================================================
+
+Unique videos evaluated: 13
+Fire videos: 11
+Smoke videos: 2
+
+Evaluation Summary:
+video_category class  videos  avg_detection_rate  avg_confidence
+          fire  fire      11               0.997           0.789
+          fire smoke      11               0.009           0.028
+         smoke  fire       2               0.482           0.298
+         smoke smoke       2               0.317           0.374
+
+Limitations:
+- Results cover only the currently evaluated videos.
+- Detection rate is not classification accuracy.
+- Smoke-category evaluation currently includes only two videos.
+- Fire detections in smoke videos require further investigation.

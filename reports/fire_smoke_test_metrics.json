@@ -1,0 +1,26 @@
+{
+  "project": "FireWatch AI",
+  "model": "YOLO26n",
+  "task": "Fire and smoke object detection",
+  "epochs": 50,
+  "test_images": 300,
+  "test_instances": 480,
+  "precision": 0.9071,
+  "recall": 0.8273,
+  "mAP50": 0.8707,
+  "mAP50_95": 0.5971,
+  "class_metrics": {
+    "fire": {
+      "precision": 0.868,
+      "recall": 0.84,
+      "mAP50": 0.866,
+      "mAP50_95": 0.505
+    },
+    "smoke": {
+      "precision": 0.946,
+      "recall": 0.815,
+      "mAP50": 0.875,
+      "mAP50_95": 0.689
+    }
+  }
+}

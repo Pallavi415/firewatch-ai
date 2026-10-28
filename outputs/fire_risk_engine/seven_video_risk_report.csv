@@ -1,0 +1,8 @@
+video_name,video_category,ground_truth,fire_detection_rate,smoke_detection_rate,risk_score,risk_level,evaluation_finding
+negsVideo1.858.avi,fire,negative,0.0495,0.0066,3.66,High,Potential false alarm
+posVideo1.868.avi,fire,fire_positive,1.0,0.0,70.0,High,Expected class detected
+posVideo2.871.avi,fire,fire_positive,1.0,0.0294,70.88,High,Expected class detected
+testneg01.807.avi,smoke,negative,0.0,0.0,0.0,Low,No detections on negative video
+testneg02.808.avi,smoke,negative,0.0,0.0,0.0,Low,No detections on negative video
+testpos01.817.avi,smoke,smoke_positive,0.0,0.5714,17.14,Medium,Expected class detected
+testpos02.818.avi,smoke,smoke_positive,0.3707,0.0,25.95,High,Potential fire-smoke confusion

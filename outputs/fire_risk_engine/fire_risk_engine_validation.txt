@@ -1,0 +1,10 @@
+FireWatch AI - Fire Risk Engine Validation
+==========================================
+Risk score range: PASS
+Risk level values: PASS
+Unique video records: PASS
+Fire safety rule: PASS
+Videos processed: 2
+Overall status: PASS
+
+Note: Prototype risk estimates only; not certified fire-safety decisions.

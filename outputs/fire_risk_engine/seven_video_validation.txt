@@ -1,0 +1,11 @@
+FireWatch AI - Seven Video Evaluation
+=====================================
+Videos evaluated: 7
+Unique video records: PASS
+Risk score bounds: PASS
+Risk level values: PASS
+Fire detection override: PASS
+Overall: PASS
+
+Limitations: Small initial sample; risk scores are prototype estimates.
+Smoke/fire class confusion requires further model evaluation.

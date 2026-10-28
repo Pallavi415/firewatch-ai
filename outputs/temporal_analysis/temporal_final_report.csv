@@ -1,0 +1,5 @@
+video_name,class,sampled_frames,detected_frames,avg_confidence,detection_runs,longest_run,smoothed_trend,detection_rate,data_status,final_temporal_status,validation_status
+posVideo1.868.avi,fire,30,30,0.534,1,30,Increasing,1.0,Limited validation,Increasing,Preliminary visual trend
+posVideo1.868.avi,smoke,30,0,0.0,0,0,Stable,0.0,Limited validation,No detections,No detections
+testpos01.817.avi,fire,41,0,0.0,0,0,Stable,0.0,Limited validation,No detections,No detections
+testpos01.817.avi,smoke,41,26,0.472,4,22,Increasing,0.634,Limited validation,Increasing,Preliminary visual trend
